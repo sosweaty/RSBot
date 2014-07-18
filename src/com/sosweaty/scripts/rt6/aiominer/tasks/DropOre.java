@@ -11,7 +11,7 @@ import org.powerbot.script.rt6.Item;
 import java.util.concurrent.Callable;
 
 public class DropOre extends Task {
-    private Ores oresToDrop;
+    private final Ores oresToDrop;
 
     public DropOre(ClientContext ctx, Ores ores) {
         super(ctx);

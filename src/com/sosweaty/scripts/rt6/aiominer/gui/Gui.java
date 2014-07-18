@@ -16,14 +16,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-/**
- * Created by Jamie on 09/07/2014.
- */
 public class Gui extends ClientAccessor {
 
     private Ores ores;
     private JPanel contentPane;
-    private JFrame mainFrame = new JFrame();
+    private final JFrame mainFrame = new JFrame();
     private final List<Task> taskList;
 
     public Gui(ClientContext ctx, List<Task> taskList) {
@@ -76,11 +73,11 @@ public class Gui extends ClientAccessor {
 
                 // Ores
                 if (oreSelected.equals("Copper Ore"))
-                    ores = ores.COPPER;
+                    ores = Ores.COPPER;
                 else if (oreSelected.equals("Tin Ore"))
-                    ores = ores.TIN;
+                    ores = Ores.TIN;
                 else if (oreSelected.equals("Iron Ore"))
-                    ores = ores.IRON;
+                    ores = Ores.IRON;
 
 
                 // Check Boxes

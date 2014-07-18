@@ -1,6 +1,5 @@
 package com.sosweaty.scripts.rt6.framework;
 
-import com.sosweaty.scripts.rt6.aiominer.constants.Ores;
 import org.powerbot.script.rt6.ClientAccessor;
 import org.powerbot.script.rt6.ClientContext;
 
