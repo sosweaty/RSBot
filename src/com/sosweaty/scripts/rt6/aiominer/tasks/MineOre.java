@@ -11,7 +11,7 @@ import org.powerbot.script.rt6.GameObject;
 import java.util.concurrent.Callable;
 
 public class MineOre extends Task {
-    private Ores oresToMine;
+    private final Ores oresToMine;
     private AIOMiner paint;
 
     public MineOre(ClientContext ctx, Ores ores) {
@@ -47,7 +47,7 @@ public class MineOre extends Task {
                 @Override
                 public Boolean call() throws Exception {
                     System.out.println("Waiting for player to finish mining.");
-                    return !ore.valid();
+                    return !ctx.objects.id(oresToMine.getObjId()).nearest().poll().valid();
                 }
             }, Random.nextInt(100, 200), 10);
             System.out.println("Finished mining");

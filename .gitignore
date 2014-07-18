@@ -34,3 +34,24 @@ Icon
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
+
+.idea/.name
+.idea/compiler.xml
+.idea/copyright/profiles_settings.xml
+.idea/encodings.xml
+.idea/excludeFromValidation.xml
+.idea/libraries/RSBot.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/scopes/scope_settings.xml
+.idea/uiDesigner.xml
+.idea/vcs.xml
+.idea/workspace.xml
+*.class
+RSBot.iml
+src/com/sosweaty/scripts/rt6/sweatyfisher/tasks/DropFish.java
+src/com/sosweaty/scripts/rt6/sweatyfisher/tasks/StartFishing.java
+src/com/sosweaty/scripts/rt6/sweatyfisher/SweatyFisher.java
+src/com/sosweaty/scripts/rt6/sweatyfisher/gui/Gui.java
+src/com/sosweaty/scripts/rt6/sweatyfisher/constants/Fish.java
+src/com/sosweaty/scripts/rt6/framework/ThreadedScript.java

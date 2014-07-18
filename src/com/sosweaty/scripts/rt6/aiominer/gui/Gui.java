@@ -1,10 +1,8 @@
 package com.sosweaty.scripts.rt6.aiominer.gui;
 
+import com.sosweaty.scripts.rt6.aiominer.constants.Location;
 import com.sosweaty.scripts.rt6.aiominer.constants.Ores;
-import com.sosweaty.scripts.rt6.aiominer.tasks.CameraPitch;
-import com.sosweaty.scripts.rt6.aiominer.tasks.DropGems;
-import com.sosweaty.scripts.rt6.aiominer.tasks.DropOre;
-import com.sosweaty.scripts.rt6.aiominer.tasks.MineOre;
+import com.sosweaty.scripts.rt6.aiominer.tasks.*;
 import com.sosweaty.scripts.rt6.framework.Task;
 import org.powerbot.script.rt6.ClientAccessor;
 import org.powerbot.script.rt6.ClientContext;
@@ -19,6 +17,7 @@ import java.util.List;
 public class Gui extends ClientAccessor {
 
     private Ores ores;
+    private Location location;
     private JPanel contentPane;
     private final JFrame mainFrame = new JFrame();
     private final List<Task> taskList;
@@ -52,12 +51,20 @@ public class Gui extends ClientAccessor {
                 "Select a mode", "Banking Mode", "Power Mining Mode"
         }));
 
+        final JLabel selectLocation = new JLabel("Select a mining location. leave blank if Power mining");
+        final JComboBox<String> locationComboBox = new JComboBox<String>();
+        locationComboBox.setModel(new DefaultComboBoxModel<String>(new String[]{
+                "Select a mining location.", "Varrock East Mine"
+        }));
+
         final JCheckBox dropGemsCheckbox = new JCheckBox("Drop Gems?");
 
         mainFrame.add(selectOre);
         mainFrame.add(oreComboBox);
         mainFrame.add(selectMode);
         mainFrame.add(modeComboBox);
+        mainFrame.add(selectLocation);
+        mainFrame.add(locationComboBox);
         mainFrame.add(dropGemsCheckbox);
 
         final JButton btnStart = new JButton("Start");
@@ -68,6 +75,7 @@ public class Gui extends ClientAccessor {
             public void actionPerformed(ActionEvent e) {
                 String oreSelected = oreComboBox.getSelectedItem().toString();
                 String modeSelected = modeComboBox.getSelectedItem().toString();
+                String locationSelected = locationComboBox.getSelectedItem().toString();
 
                 taskList.add(new CameraPitch(ctx));
 
@@ -84,13 +92,20 @@ public class Gui extends ClientAccessor {
                 if (dropGemsCheckbox.isSelected())
                     taskList.add(new DropGems(ctx));
 
-                if (modeSelected.equals("Banking Mode"))
+                // Mode
+                if (modeSelected.equals("Banking Mode")) {
                     taskList.add(new MineOre(ctx, ores));
-
-                else if (modeSelected.equals("Power Mining Mode"))
+                } else if (modeSelected.equals("Power Mining Mode")) {
                     taskList.add(new MineOre(ctx, ores));
                     taskList.add(new DropOre(ctx, ores));
-
+                }
+                // Location
+                if (locationSelected.equals("Varrock East Mine")) {
+                    location = Location.VARROCKEAST;
+                    taskList.add(new WalkToBank(ctx, location));
+                    taskList.add(new WalkToMine(ctx, location));
+                    taskList.add(new DepositToBank(ctx, location, ores));
+                }
                 mainFrame.dispose();
             }
         });
