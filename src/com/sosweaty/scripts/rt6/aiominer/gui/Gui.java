@@ -26,7 +26,7 @@ public class Gui extends ClientAccessor {
         super(ctx);
         this.taskList = taskList;
         initialize();
-        mainFrame.setTitle("Settings");
+        mainFrame.setTitle("AIO Miner Settings");
         mainFrame.setVisible(true);
 
     }
@@ -37,24 +37,24 @@ public class Gui extends ClientAccessor {
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         mainFrame.setContentPane(contentPane);
-        contentPane.setLayout(new GridLayout(6, 1, 0, 0));
+        contentPane.setLayout(new GridLayout(8, 1, 0, 0));
 
         final JLabel selectOre = new JLabel("Select what Ore to mine.");
         final JComboBox<String> oreComboBox = new JComboBox<String>();
         oreComboBox.setModel(new DefaultComboBoxModel<String>(new String[]{
-                "Choose an ore to mine", "Copper Ore", "Tin Ore", "Iron Ore"
+                "Not Selected", "Copper Ore", "Tin Ore", "Iron Ore"
         }));
 
         final JLabel selectMode = new JLabel("Select what mode to use.");
         final JComboBox<String> modeComboBox = new JComboBox<String>();
         modeComboBox.setModel(new DefaultComboBoxModel<String>(new String[]{
-                "Select a mode", "Banking Mode", "Power Mining Mode"
+                "Not Selected", "Power Mining Mode", "Banking Mode", "M1D1 Mode"
         }));
 
         final JLabel selectLocation = new JLabel("Select a mining location. leave blank if Power mining");
         final JComboBox<String> locationComboBox = new JComboBox<String>();
         locationComboBox.setModel(new DefaultComboBoxModel<String>(new String[]{
-                "Select a mining location.", "Varrock East Mine"
+                "Not Selected", "Varrock East Mine"
         }));
 
         final JCheckBox dropGemsCheckbox = new JCheckBox("Drop Gems?");
@@ -92,19 +92,22 @@ public class Gui extends ClientAccessor {
                 if (dropGemsCheckbox.isSelected())
                     taskList.add(new DropGems(ctx));
 
-                // Mode
-                if (modeSelected.equals("Banking Mode")) {
-                    taskList.add(new MineOre(ctx, ores));
-                } else if (modeSelected.equals("Power Mining Mode")) {
-                    taskList.add(new MineOre(ctx, ores));
-                    taskList.add(new DropOre(ctx, ores));
-                }
                 // Location
                 if (locationSelected.equals("Varrock East Mine")) {
                     location = Location.VARROCKEAST;
+                }
+
+                // Mode
+                if (modeSelected.equals("Power Mining Mode")) {
+                    taskList.add(new MineOre(ctx, ores));
+                    taskList.add(new DropOre(ctx, ores));
+                } else if (modeSelected.equals("Banking Mode")) {
+                    taskList.add(new MineOre(ctx, ores));
                     taskList.add(new WalkToBank(ctx, location));
                     taskList.add(new WalkToMine(ctx, location));
                     taskList.add(new DepositToBank(ctx, location, ores));
+                } else if (modeSelected.equals("M1D1 Mode")) {
+                    taskList.add(new M1D1(ctx, ores));
                 }
                 mainFrame.dispose();
             }

@@ -29,6 +29,6 @@ public class WalkToMine extends Task {
     @Override
     public void execute() {
         final TilePath tilePath = ctx.movement.newTilePath(locationToMine.getTilepath());
-        tilePath.traverse();
+        tilePath.randomize(1, 1).traverse();
     }
 }

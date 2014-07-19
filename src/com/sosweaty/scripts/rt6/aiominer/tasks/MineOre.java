@@ -28,7 +28,7 @@ public class MineOre extends Task {
 
     @Override
     public void execute() {
-        final GameObject ore = ctx.objects.select().id(oresToMine.getObjId()).nearest().poll();
+        final GameObject ore = ctx.objects.id(oresToMine.getObjId()).nearest().poll();
         final int i = Random.nextInt(0, 90);
 
         ctx.combatBar.actionAt(0).select();
@@ -47,7 +47,7 @@ public class MineOre extends Task {
                 @Override
                 public Boolean call() throws Exception {
                     System.out.println("Waiting for player to finish mining.");
-                    return !ctx.objects.id(oresToMine.getObjId()).nearest().poll().valid();
+                    return ore.valid();
                 }
             }, Random.nextInt(100, 200), 10);
             System.out.println("Finished mining");

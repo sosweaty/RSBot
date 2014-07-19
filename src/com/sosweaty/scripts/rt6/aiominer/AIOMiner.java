@@ -92,7 +92,7 @@ public class AIOMiner extends PollingScript<ClientContext> implements PaintListe
 
         g.setColor(textBColor);
         g.drawString("» Run Time: " + formatTime(getRuntime()), 20, 85);
-        g.drawString("» Status: Not Added" , 20, 100);
+        g.drawString("» Status: Not Added" , 20, 100); // >> TO DO
         g.drawString("» Version: " + version, 20, 115);
         g.drawString("» By: Sosweaty", 20, 130);
 

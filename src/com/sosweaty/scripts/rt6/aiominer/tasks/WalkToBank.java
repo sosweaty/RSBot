@@ -28,6 +28,6 @@ public class WalkToBank extends Task {
     public void execute() {
         final TilePath tilePath = ctx.movement.newTilePath(locationToMine.getTilepath());
 
-        tilePath.reverse().traverse();
+        tilePath.randomize(1, 1).reverse().traverse();
     }
 }

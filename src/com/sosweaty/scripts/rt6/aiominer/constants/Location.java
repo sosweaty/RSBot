@@ -4,14 +4,19 @@ import org.powerbot.script.Area;
 import org.powerbot.script.Tile;
 
 public enum Location {
-    VARROCKEAST("Varrock East Mine", new Tile[]{new Tile(3253, 3420, 0),
-            new Tile(3253, 3426, 0), new Tile(3258, 3429, 0), new Tile(3264, 3429, 0),
-            new Tile(3273, 3428, 0), new Tile(3274, 3428, 0), new Tile(3281, 3429, 0),
-            new Tile(3285, 3425, 0), new Tile(3288, 3420, 0), new Tile(3290, 3415, 0),
-            new Tile(3290, 3409, 0), new Tile(3291, 3404, 0), new Tile(3291, 3398, 0),
-            new Tile(3291, 3392, 0), new Tile(3292, 3386, 0), new Tile(3292, 3384, 0),
-            new Tile(3294, 3380, 0), new Tile(3292, 3375, 0), new Tile(3289, 3372, 0),
-            new Tile(3287, 3368, 0), new Tile(3284, 3365, 0)},
+    VARROCKEAST("Varrock East Mine", new Tile[]{new Tile(3253, 3421),
+            new Tile(3253, 2424), new Tile(3254, 3427), new Tile(3257, 3428),
+            new Tile(3260, 3428), new Tile(3263, 3428), new Tile(3266, 3428),
+            new Tile(3269, 3428), new Tile(3272, 3428), new Tile(3273, 3428),
+            new Tile(3274, 3428), new Tile(3277, 3428), new Tile(3280, 3428),
+            new Tile(3283, 3427), new Tile(3285, 3424), new Tile(3287, 3421),
+            new Tile(3287, 3418), new Tile(3288, 3415), new Tile(3289, 3412),
+            new Tile(3290, 3409), new Tile(3291, 3406), new Tile(3291, 3403),
+            new Tile(3291, 3400), new Tile(3291, 3397), new Tile(3291, 3394),
+            new Tile(3291, 3391), new Tile(3291, 3388), new Tile(3292, 3386),
+            new Tile(3292, 3385), new Tile(3292, 3384), new Tile(3293, 3381),
+            new Tile(3293, 3378), new Tile(3290, 3375), new Tile(3287, 3372),
+            new Tile(3287, 3369), new Tile(3285, 3366)},
             new Area(new Tile(3257, 3420), new Tile(3250, 3423)),
             new Area(new Tile(3291, 3360), new Tile(3279, 3372)));
 
