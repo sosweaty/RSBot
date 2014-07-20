@@ -1,5 +1,6 @@
 package com.sosweaty.scripts.rt6.aiominer.tasks;
 
+import com.sosweaty.scripts.rt6.aiominer.AIOMiner;
 import com.sosweaty.scripts.rt6.aiominer.constants.Location;
 import com.sosweaty.scripts.rt6.aiominer.constants.Ores;
 import com.sosweaty.scripts.rt6.framework.Task;
@@ -28,6 +29,7 @@ public class DepositToBank extends Task {
 
     @Override
     public void execute() {
+        AIOMiner.setStatus("Depositing to bank");
         if (ctx.bank.inViewport()) {
             if (ctx.bank.open()) {
                 Condition.wait(new Callable<Boolean>() {

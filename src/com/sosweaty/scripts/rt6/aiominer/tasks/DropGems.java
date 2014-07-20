@@ -1,5 +1,6 @@
 package com.sosweaty.scripts.rt6.aiominer.tasks;
 
+import com.sosweaty.scripts.rt6.aiominer.AIOMiner;
 import com.sosweaty.scripts.rt6.framework.Task;
 import org.powerbot.script.rt6.ClientContext;
 import org.powerbot.script.rt6.Item;
@@ -19,7 +20,9 @@ public class DropGems extends Task {
 
     @Override
     public void execute() {
+        AIOMiner.setStatus("Found Gem");
         for ( Item gem : ctx.backpack.select().id(gems) ) {
+            AIOMiner.setStatus("Dropping Gem");
             gem.interact("Drop");
         }
     }

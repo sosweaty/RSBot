@@ -23,6 +23,7 @@ public class AIOMiner extends PollingScript<ClientContext> implements PaintListe
     private final Color textBColor = new Color(190, 190, 190, 255);
     private int ores, oresPerHour, currentXp, xpGained, startXp, xpPerHour;
     private String scriptName, version;
+    private static String status = "Waiting for Input";
 
     List<Task> tasklist = new ArrayList<Task>();
 
@@ -49,6 +50,10 @@ public class AIOMiner extends PollingScript<ClientContext> implements PaintListe
     public void messaged(MessageEvent evt) {
         if (evt.text().startsWith("You manage to mine some"))
             ores++;
+    }
+
+    public static void setStatus(String s) {
+        status = s;
     }
 
     @Override
@@ -92,7 +97,7 @@ public class AIOMiner extends PollingScript<ClientContext> implements PaintListe
 
         g.setColor(textBColor);
         g.drawString("» Run Time: " + formatTime(getRuntime()), 20, 85);
-        g.drawString("» Status: Not Added" , 20, 100); // >> TO DO
+        g.drawString("» Status: " + status, 20, 100);
         g.drawString("» Version: " + version, 20, 115);
         g.drawString("» By: Sosweaty", 20, 130);
 

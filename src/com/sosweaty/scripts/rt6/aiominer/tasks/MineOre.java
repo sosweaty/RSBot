@@ -1,6 +1,5 @@
 package com.sosweaty.scripts.rt6.aiominer.tasks;
 
-import com.sosweaty.scripts.rt6.aiominer.AIOMiner;
 import com.sosweaty.scripts.rt6.aiominer.constants.Ores;
 import com.sosweaty.scripts.rt6.framework.Task;
 import org.powerbot.script.Condition;
@@ -10,9 +9,10 @@ import org.powerbot.script.rt6.GameObject;
 
 import java.util.concurrent.Callable;
 
+import static com.sosweaty.scripts.rt6.aiominer.AIOMiner.setStatus;
+
 public class MineOre extends Task {
     private final Ores oresToMine;
-    private AIOMiner paint;
 
     public MineOre(ClientContext ctx, Ores ores) {
         super(ctx);
@@ -34,15 +34,20 @@ public class MineOre extends Task {
         ctx.combatBar.actionAt(0).select();
         bounds(ore);
         System.out.println("Attempting to click ores.");
+        setStatus("Finding Ore");
         if (ore.click()) {
+            setStatus("Mining");
             if (ore.tile().distanceTo(ctx.players.local().tile()) < 2) {
                 if (i % 20 == 0) {
+                    setStatus("Rotating Camera");
                     ctx.camera.angle(Random.nextInt(0, 360));
                 }
             } else if (ore.tile().distanceTo(ctx.players.local().tile()) > -2) {
+                setStatus("Rotating Camera");
                 ctx.camera.turnTo(ore);
             }
             System.out.println("Calling Condition.wait");
+            setStatus("Mining");
             Condition.wait(new Callable<Boolean>() {
                 @Override
                 public Boolean call() throws Exception {
@@ -50,8 +55,10 @@ public class MineOre extends Task {
                     return ore.valid();
                 }
             }, Random.nextInt(100, 200), 10);
+            setStatus("Finished Mining");
             System.out.println("Finished mining");
         } else {
+            setStatus("Failed");
             System.out.println("Failed to click ores.");
         }
     }

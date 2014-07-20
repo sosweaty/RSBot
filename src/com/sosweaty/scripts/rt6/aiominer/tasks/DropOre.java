@@ -1,14 +1,10 @@
 package com.sosweaty.scripts.rt6.aiominer.tasks;
 
+import com.sosweaty.scripts.rt6.aiominer.AIOMiner;
 import com.sosweaty.scripts.rt6.aiominer.constants.Ores;
 import com.sosweaty.scripts.rt6.framework.Task;
-import org.powerbot.script.Condition;
-import org.powerbot.script.Random;
 import org.powerbot.script.rt6.ClientContext;
-import org.powerbot.script.rt6.GameObject;
 import org.powerbot.script.rt6.Item;
-
-import java.util.concurrent.Callable;
 
 public class DropOre extends Task {
     private final Ores oresToDrop;
@@ -26,6 +22,7 @@ public class DropOre extends Task {
 
     @Override
     public void execute() {
+        AIOMiner.setStatus("Dropping Ore");
         for (Item ore : ctx.backpack.select().id(oresToDrop.getItemId())) {
             ore.interact("Drop", oresToDrop.getName());
         }

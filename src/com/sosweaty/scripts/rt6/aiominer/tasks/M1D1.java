@@ -1,5 +1,6 @@
 package com.sosweaty.scripts.rt6.aiominer.tasks;
 
+import com.sosweaty.scripts.rt6.aiominer.AIOMiner;
 import com.sosweaty.scripts.rt6.aiominer.constants.Ores;
 import com.sosweaty.scripts.rt6.framework.Task;
 import org.powerbot.script.Condition;
@@ -30,6 +31,7 @@ public class M1D1 extends Task {
         final ItemQuery<Item> itemOre = ctx.backpack.select().id(oresSelected.getItemId());
         if (itemOre.count() < 1) {
             if (objOre.click()) {
+                AIOMiner.setStatus("Mining");
                 Condition.wait(new Callable<Boolean>() {
                     @Override
                     public Boolean call() throws Exception {
@@ -38,7 +40,8 @@ public class M1D1 extends Task {
                 }, Random.nextInt(100, 200), 10);
             }
         } else {
-            ctx.backpack.select().id(oresSelected.getObjId()).poll().interact("Drop", oresSelected.getName());
+            AIOMiner.setStatus("Dropping Ore");
+            ctx.backpack.select().id(oresSelected.getItemId()).poll().interact("Drop", oresSelected.getName());
         }
     }
 }
