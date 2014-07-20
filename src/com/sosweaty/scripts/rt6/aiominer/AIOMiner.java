@@ -23,7 +23,7 @@ public class AIOMiner extends PollingScript<ClientContext> implements PaintListe
     private final Color textBColor = new Color(190, 190, 190, 255);
     private int ores, oresPerHour, currentXp, xpGained, startXp, xpPerHour;
     private String scriptName, version;
-    private static String status = "Waiting for Input";
+    private static String status = "Waiting";
 
     List<Task> tasklist = new ArrayList<Task>();
 
@@ -59,7 +59,7 @@ public class AIOMiner extends PollingScript<ClientContext> implements PaintListe
     @Override
     public void repaint(Graphics g) {
         scriptName = "AIO Miner";
-        version = "0.1";
+        version = "0.2a";
         currentXp = ctx.skills.experience(Skills.MINING);
         xpGained = currentXp - startXp;
         xpPerHour = (int) (xpGained * (3600000d / getRuntime()));
@@ -80,9 +80,12 @@ public class AIOMiner extends PollingScript<ClientContext> implements PaintListe
 
                 getLocation();
 
-        g.setColor(Color.yellow);
-        g.drawLine(ctx.mouse.getLocation().x - 5, ctx.mouse.getLocation().y - 5, ctx.mouse.getLocation().x + 5, ctx.mouse.getLocation().y + 5);
-        g.drawLine(ctx.mouse.getLocation().x - 5, ctx.mouse.getLocation().y + 5, ctx.mouse.getLocation().x + 5, ctx.mouse.getLocation().y - 5);
+        g.setColor(Color.WHITE);
+        Point m = ctx.mouse.getLocation();
+        g.drawLine(m.x - 8, m.y - 8, m.x + 8, m.y + 8);
+        g.drawLine(m.x - 8, m.y + 8, m.x + 8, m.y - 8);
+        g.setColor(Color.BLACK);
+        g.drawOval(m.x - 4, m.y - 4, 8, 8);
 
         g.setColor(paintBgColor2);
         g.fillRect(8, 53, 179, 184);

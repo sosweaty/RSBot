@@ -40,10 +40,7 @@ public class Gui extends ClientAccessor {
         contentPane.setLayout(new GridLayout(8, 1, 0, 0));
 
         final JLabel selectOre = new JLabel("Select what Ore to mine.");
-        final JComboBox<String> oreComboBox = new JComboBox<String>();
-        oreComboBox.setModel(new DefaultComboBoxModel<String>(new String[]{
-                "Not Selected", "Copper Ore", "Tin Ore", "Iron Ore"
-        }));
+        final JComboBox<Ores> oreComboBox = new JComboBox<Ores>(Ores.values());
 
         final JLabel selectMode = new JLabel("Select what mode to use.");
         final JComboBox<String> modeComboBox = new JComboBox<String>();
@@ -52,13 +49,9 @@ public class Gui extends ClientAccessor {
         }));
 
         final JLabel selectLocation = new JLabel("Select a mining location. leave blank if Power mining");
-        final JComboBox<String> locationComboBox = new JComboBox<String>();
-        locationComboBox.setModel(new DefaultComboBoxModel<String>(new String[]{
-                "Not Selected", "Varrock East Mine"
-        }));
+        final JComboBox<Location> locationComboBox = new JComboBox<Location>(Location.values());
 
         final JCheckBox dropGemsCheckbox = new JCheckBox("Drop Gems?");
-
         mainFrame.add(selectOre);
         mainFrame.add(oreComboBox);
         mainFrame.add(selectMode);
@@ -73,36 +66,27 @@ public class Gui extends ClientAccessor {
         btnStart.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String oreSelected = oreComboBox.getSelectedItem().toString();
                 String modeSelected = modeComboBox.getSelectedItem().toString();
-                String locationSelected = locationComboBox.getSelectedItem().toString();
 
                 taskList.add(new CameraPitch(ctx));
+                taskList.add(new CloseWidgetCockBlocks(ctx));
 
                 // Ores
-                if (oreSelected.equals("Copper Ore"))
-                    ores = Ores.COPPER;
-                else if (oreSelected.equals("Tin Ore"))
-                    ores = Ores.TIN;
-                else if (oreSelected.equals("Iron Ore"))
-                    ores = Ores.IRON;
+                ores = (Ores) oreComboBox.getSelectedItem();
 
+                // Location
+                location = (Location) locationComboBox.getSelectedItem();
 
                 // Check Boxes
                 if (dropGemsCheckbox.isSelected())
                     taskList.add(new DropGems(ctx));
 
-                // Location
-                if (locationSelected.equals("Varrock East Mine")) {
-                    location = Location.VARROCKEAST;
-                }
-
                 // Mode
                 if (modeSelected.equals("Power Mining Mode")) {
-                    taskList.add(new MineOre(ctx, ores));
+                    taskList.add(new MineOre(ctx, ores, location));
                     taskList.add(new DropOre(ctx, ores));
                 } else if (modeSelected.equals("Banking Mode")) {
-                    taskList.add(new MineOre(ctx, ores));
+                    taskList.add(new MineOre(ctx, ores, location));
                     taskList.add(new WalkToBank(ctx, location));
                     taskList.add(new WalkToMine(ctx, location));
                     taskList.add(new DepositToBank(ctx, location, ores));

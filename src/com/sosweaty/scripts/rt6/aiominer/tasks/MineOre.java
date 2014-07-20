@@ -1,65 +1,59 @@
 package com.sosweaty.scripts.rt6.aiominer.tasks;
 
+import com.sosweaty.scripts.rt6.aiominer.AIOMiner;
+import com.sosweaty.scripts.rt6.aiominer.constants.Location;
 import com.sosweaty.scripts.rt6.aiominer.constants.Ores;
 import com.sosweaty.scripts.rt6.framework.Task;
 import org.powerbot.script.Condition;
 import org.powerbot.script.Random;
 import org.powerbot.script.rt6.ClientContext;
 import org.powerbot.script.rt6.GameObject;
+import org.powerbot.script.rt6.Interactive;
 
 import java.util.concurrent.Callable;
 
-import static com.sosweaty.scripts.rt6.aiominer.AIOMiner.setStatus;
-
 public class MineOre extends Task {
     private final Ores oresToMine;
+    private final Location selectedLocation;
 
-    public MineOre(ClientContext ctx, Ores ores) {
+    public MineOre(ClientContext ctx, Ores ores, Location location) {
         super(ctx);
         this.oresToMine = ores;
+        this.selectedLocation = location;
     }
 
     @Override
     public boolean activate() {
         return ctx.backpack.select().count() < 28
-                && ctx.players.local().idle()
-                && ctx.objects.select().id(oresToMine.getObjId()).nearest().poll().inViewport();
+                && selectedLocation.getMineArea().contains(ctx.players.local());
     }
 
     @Override
     public void execute() {
-        final GameObject ore = ctx.objects.id(oresToMine.getObjId()).nearest().poll();
+        final GameObject ore = ctx.objects.select().id(oresToMine.getObjId()).select(Interactive.areInViewport()).nearest().limit(2).shuffle().poll();
         final int i = Random.nextInt(0, 90);
 
-        ctx.combatBar.actionAt(0).select();
         bounds(ore);
-        System.out.println("Attempting to click ores.");
-        setStatus("Finding Ore");
+        AIOMiner.setStatus("Finding Ore");
         if (ore.click()) {
-            setStatus("Mining");
+            AIOMiner.setStatus("Walking to Ore");
             if (ore.tile().distanceTo(ctx.players.local().tile()) < 2) {
                 if (i % 20 == 0) {
-                    setStatus("Rotating Camera");
+                    AIOMiner.setStatus("Rotating Camera");
                     ctx.camera.angle(Random.nextInt(0, 360));
                 }
-            } else if (ore.tile().distanceTo(ctx.players.local().tile()) > -2) {
-                setStatus("Rotating Camera");
+            } else if (ore.tile().distanceTo(ctx.players.local().tile()) > 2) {
+                AIOMiner.setStatus("Rotating Camera");
                 ctx.camera.turnTo(ore);
             }
-            System.out.println("Calling Condition.wait");
-            setStatus("Mining");
+            AIOMiner.setStatus("Mining");
             Condition.wait(new Callable<Boolean>() {
                 @Override
                 public Boolean call() throws Exception {
-                    System.out.println("Waiting for player to finish mining.");
-                    return ore.valid();
+                    return !ore.valid();
                 }
-            }, Random.nextInt(100, 200), 10);
-            setStatus("Finished Mining");
-            System.out.println("Finished mining");
-        } else {
-            setStatus("Failed");
-            System.out.println("Failed to click ores.");
+            }, Random.nextInt(100, 150), 100);
+            AIOMiner.setStatus("Finished Mining");
         }
     }
 

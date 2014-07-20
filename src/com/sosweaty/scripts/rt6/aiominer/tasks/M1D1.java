@@ -41,7 +41,14 @@ public class M1D1 extends Task {
             }
         } else {
             AIOMiner.setStatus("Dropping Ore");
-            ctx.backpack.select().id(oresSelected.getItemId()).poll().interact("Drop", oresSelected.getName());
+            itemOre.poll().interact("Drop", oresSelected.getName());
+
+            Condition.wait(new Callable<Boolean>() {
+                @Override
+                public Boolean call() throws Exception {
+                    return !itemOre.poll().valid();
+                }
+            }, Random.nextInt(50, 100), 10);
         }
     }
 }
