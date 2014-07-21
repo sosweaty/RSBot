@@ -25,9 +25,6 @@ public class WalkToBank extends Task {
     public void execute() {
         final TilePath tilePath = ctx.movement.newTilePath(locationToMine.getTilepath());
 
-
-        ctx.movement.step(locationToMine.getBankArea().getRandomTile());
-
         AIOMiner.setStatus("Walking to Bank");
         ctx.camera.turnTo(locationToMine.getBankArea().getRandomTile());
         tilePath.randomize(1, 1).reverse().traverse();
