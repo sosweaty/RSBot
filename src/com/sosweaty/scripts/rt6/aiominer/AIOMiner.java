@@ -21,7 +21,7 @@ public class AIOMiner extends PollingScript<ClientContext> implements PaintListe
     private final Color paintBgColor2 = new Color(255, 255, 255, 165);
     private final Color textHColor = new Color(255, 255, 255, 255);
     private final Color textBColor = new Color(190, 190, 190, 255);
-    private int ores, oresPerHour, currentXp, xpGained, startXp, xpPerHour;
+    private int ores, oresPerHour, currentXp, xpGained, startXp, xpPerHour, currentLevel, levelsGained, startLevel;
     private String scriptName, version;
     private static String status = "Waiting";
 
@@ -30,6 +30,8 @@ public class AIOMiner extends PollingScript<ClientContext> implements PaintListe
     @Override
     public void start() {
         startXp = ctx.skills.experience(Skills.MINING);
+        startLevel = ctx.skills.level(Skills.MINING);
+        //tasklist.add(new test(ctx));
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -60,6 +62,8 @@ public class AIOMiner extends PollingScript<ClientContext> implements PaintListe
     public void repaint(Graphics g) {
         scriptName = "AIO Miner";
         version = "0.2a";
+        currentLevel = ctx.skills.level(Skills.MINING);
+        levelsGained = currentLevel - startLevel;
         currentXp = ctx.skills.experience(Skills.MINING);
         xpGained = currentXp - startXp;
         xpPerHour = (int) (xpGained * (3600000d / getRuntime()));
@@ -96,7 +100,7 @@ public class AIOMiner extends PollingScript<ClientContext> implements PaintListe
         g.drawString("Script Info", 15, 70);
         g.drawString("Ore Stats", 15, 145);
         g.drawString("XP Stats", 16, 190);
-        //g.drawString("Profit Stats",15, 220); >> TO DO
+        //g.drawString("Profit Stats", 15, 220);// >> TO DO
 
         g.setColor(textBColor);
         g.drawString("» Run Time: " + formatTime(getRuntime()), 20, 85);
@@ -104,11 +108,10 @@ public class AIOMiner extends PollingScript<ClientContext> implements PaintListe
         g.drawString("» Version: " + version, 20, 115);
         g.drawString("» By: Sosweaty", 20, 130);
 
-
         g.drawString("» Ores Mined: " + ores, 20, 160);
         g.drawString("» Ores p/h: " + oresPerHour, 20, 175);
 
-        g.drawString("» XP Gained: " + xpGained, 20, 205);
+        g.drawString("» XP Gained: " + xpGained + " (+" + levelsGained + ")", 20, 205);
         g.drawString("» XP p/h: " + xpPerHour, 20, 220);
         //g.drawString("» Profit Gained", 20, 235); >> TO DO
         //g.drawString("» Profit p/h", 20, 250); >> TO DO

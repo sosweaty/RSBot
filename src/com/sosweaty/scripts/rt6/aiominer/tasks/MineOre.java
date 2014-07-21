@@ -54,6 +54,8 @@ public class MineOre extends Task {
                 }
             }, Random.nextInt(100, 150), 100);
             AIOMiner.setStatus("Finished Mining");
+        } else {
+            ctx.movement.step(ore);
         }
     }
 

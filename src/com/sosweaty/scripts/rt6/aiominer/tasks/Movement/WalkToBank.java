@@ -1,4 +1,4 @@
-package com.sosweaty.scripts.rt6.aiominer.tasks;
+package com.sosweaty.scripts.rt6.aiominer.tasks.Movement;
 
 import com.sosweaty.scripts.rt6.aiominer.AIOMiner;
 import com.sosweaty.scripts.rt6.aiominer.constants.Location;
@@ -29,6 +29,7 @@ public class WalkToBank extends Task {
         ctx.movement.step(locationToMine.getBankArea().getRandomTile());
 
         AIOMiner.setStatus("Walking to Bank");
+        ctx.camera.turnTo(locationToMine.getBankArea().getRandomTile());
         tilePath.randomize(1, 1).reverse().traverse();
     }
 }

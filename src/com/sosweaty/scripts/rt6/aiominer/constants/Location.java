@@ -4,7 +4,7 @@ import org.powerbot.script.Area;
 import org.powerbot.script.Tile;
 
 public enum Location {
-    VARROCKEAST("Varrock East Mine", new Tile[]{new Tile(3253, 3421),
+    VARROCK_EAST_MINE("Varrock East Mine", new Tile[]{new Tile(3253, 3421),
             new Tile(3253, 2424), new Tile(3254, 3427), new Tile(3257, 3428),
             new Tile(3260, 3428), new Tile(3263, 3428), new Tile(3266, 3428),
             new Tile(3269, 3428), new Tile(3272, 3428), new Tile(3273, 3428),
@@ -19,7 +19,7 @@ public enum Location {
             new Tile(3287, 3369), new Tile(3285, 3366)},
             new Area(new Tile(3257, 3420), new Tile(3250, 3423)),
             new Area(new Tile(3291, 3360), new Tile(3279, 3372))),
-    VARROCKWEST("Varrock West Mine", new Tile[]{new Tile(3185, 3437, 0),
+    VARROCK_WEST_MINE("Varrock West Mine", new Tile[]{new Tile(3185, 3437, 0),
             new Tile(3185, 3434, 0), new Tile(3185, 3431, 0), new Tile(3182, 3428, 0),
             new Tile(3179, 3428, 0), new Tile(3176, 3428, 0), new Tile(3173, 3425, 0),
             new Tile(3171, 3422, 0), new Tile(3171, 3419, 0), new Tile(3172, 3416, 0),

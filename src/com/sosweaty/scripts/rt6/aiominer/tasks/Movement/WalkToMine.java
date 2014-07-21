@@ -1,4 +1,4 @@
-package com.sosweaty.scripts.rt6.aiominer.tasks;
+package com.sosweaty.scripts.rt6.aiominer.tasks.Movement;
 
 import com.sosweaty.scripts.rt6.aiominer.AIOMiner;
 import com.sosweaty.scripts.rt6.aiominer.constants.Location;
@@ -27,6 +27,7 @@ public class WalkToMine extends Task {
         final TilePath tilePath = ctx.movement.newTilePath(locationToMine.getTilepath());
 
         AIOMiner.setStatus("Walking to Mine");
+        ctx.camera.turnTo(locationToMine.getMineArea().getRandomTile());
         tilePath.randomize(1, 1).traverse();
     }
 }

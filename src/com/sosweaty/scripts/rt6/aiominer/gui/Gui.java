@@ -3,6 +3,8 @@ package com.sosweaty.scripts.rt6.aiominer.gui;
 import com.sosweaty.scripts.rt6.aiominer.constants.Location;
 import com.sosweaty.scripts.rt6.aiominer.constants.Ores;
 import com.sosweaty.scripts.rt6.aiominer.tasks.*;
+import com.sosweaty.scripts.rt6.aiominer.tasks.Movement.WalkToBank;
+import com.sosweaty.scripts.rt6.aiominer.tasks.Movement.WalkToMine;
 import com.sosweaty.scripts.rt6.framework.Task;
 import org.powerbot.script.rt6.ClientAccessor;
 import org.powerbot.script.rt6.ClientContext;
@@ -70,6 +72,7 @@ public class Gui extends ClientAccessor {
 
                 taskList.add(new CameraPitch(ctx));
                 taskList.add(new CloseWidgetCockBlocks(ctx));
+                taskList.add(new AntiBan(ctx));
 
                 // Ores
                 ores = (Ores) oreComboBox.getSelectedItem();
